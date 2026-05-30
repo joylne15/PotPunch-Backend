@@ -103,25 +103,9 @@ def get_activity(db: Session = Depends(get_db)):
     return activities[:10]
 
 
-# --- Seed database with sample data ---
-
 @app.post("/api/seed")
 def seed_data(db: Session = Depends(get_db)):
     if db.query(Setting).count() == 0:
         db.add(Setting(key="target", value="130000"))
-
-    if db.query(Member).count() == 0:
-        sample_members = [
-            Member(name="Alice Wanjiku", phone="+254 712 345 678", total_paid=10000, remaining=3000),
-            Member(name="Brian Odhiambo", phone="+254 723 456 789", total_paid=13000, remaining=0),
-            Member(name="Charity Achieng", phone="+254 734 567 890", total_paid=5000, remaining=8000),
-            Member(name="David Kamau", phone="+254 745 678 901", total_paid=0, remaining=13000),
-            Member(name="Esther Njoroge", phone="+254 756 789 012", total_paid=8000, remaining=5000),
-            Member(name="Francis Mwangi", phone="+254 767 890 123", total_paid=11000, remaining=2000),
-            Member(name="Grace Wambui", phone="+254 778 901 234", total_paid=13000, remaining=0),
-            Member(name="Henry Kiprop", phone="+254 789 012 345", total_paid=2000, remaining=11000),
-        ]
-        db.add_all(sample_members)
-
-    db.commit()
-    return {"message": "Database seeded successfully"}
+        db.commit()
+    return {"message": "Database initialized successfully"}
